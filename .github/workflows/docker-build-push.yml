@@ -73,3 +73,62 @@ jobs:
           echo "**Platforms:**" >> $GITHUB_STEP_SUMMARY
           echo "- linux/amd64" >> $GITHUB_STEP_SUMMARY
           echo "- linux/arm64/v8" >> $GITHUB_STEP_SUMMARY
+
+      - name: Inspect image and report size
+        run: |
+          echo "## Image Inspection" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Pull the image for inspection
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          
+          # Get image size
+          SIZE=$(docker images --format "{{.Size}}" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest | head -1)
+          echo "**Image Size:** \`$SIZE\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Get layer information
+          echo "**Layers:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          docker history ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest --human=true --format "table {{.Size}}\t{{.CreatedBy}}" | head -10
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Inspect platforms
+          echo "**Platform Details:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          docker buildx imagetools inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest | grep -E "(Name:|MediaType:|Platform:)"
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Generate vulnerability summary
+        if: always()
+        run: |
+          echo "## Security Scan" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Run trivy for summary output
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy:latest image --severity HIGH,CRITICAL \
+            --format table ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest > trivy-summary.txt || true
+          
+          if [ -s trivy-summary.txt ]; then
+            echo "**Vulnerabilities Found:**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat trivy-summary.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No HIGH or CRITICAL vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+          fi

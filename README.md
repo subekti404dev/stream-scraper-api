@@ -21,7 +21,7 @@ docker run -d \
   -p 3000:3000 \
   -e TMDB_API_KEY=your_tmdb_api_key \
   -v $(pwd)/data:/app/data \
-  ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+  ghcr.io/subekti404dev/stream-scraper-api:latest
 ```
 
 Akses di `http://localhost:3000`
@@ -31,7 +31,7 @@ Akses di `http://localhost:3000`
 #### 1. Clone repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/stream-scraper-api.git
+git clone https://github.com/subekti404dev/stream-scraper-api.git
 cd stream-scraper-api
 ```
 
@@ -84,7 +84,7 @@ version: '3.8'
 
 services:
   scraper:
-    image: ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+    image: ghcr.io/subekti404dev/stream-scraper-api:latest
     container_name: stream-scraper
     ports:
       - "3000:3000"
@@ -247,7 +247,7 @@ MIT License - lihat [LICENSE](LICENSE) untuk detail.
 ## 📞 Support
 
 Jika menemukan bug atau punya pertanyaan:
-- Open issue di [GitHub Issues](https://github.com/YOUR_USERNAME/stream-scraper-api/issues)
+- Open issue di [GitHub Issues](https://github.com/subekti404dev/stream-scraper-api/issues)
 - Check [DOCKER.md](./DOCKER.md) untuk troubleshooting Docker
 
 ---

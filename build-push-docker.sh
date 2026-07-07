@@ -2,7 +2,7 @@
 set -e
 
 # Configuration
-IMAGE_NAME="ghcr.io/${GITHUB_USERNAME:-yourusername}/stream-scraper-api"
+IMAGE_NAME="ghcr.io/${GITHUB_USERNAME:-subekti404dev}/stream-scraper-api"
 VERSION="${VERSION:-latest}"
 
 # Colors for output

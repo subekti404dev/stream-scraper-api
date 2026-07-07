@@ -6,7 +6,7 @@
 
 ```bash
 # Pull latest image (multi-arch: amd64, arm64/v8)
-docker pull ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+docker pull ghcr.io/subekti404dev/stream-scraper-api:latest
 
 # Run container
 docker run -d \
@@ -14,7 +14,7 @@ docker run -d \
   -p 3000:3000 \
   -e TMDB_API_KEY=your_tmdb_api_key_here \
   -v $(pwd)/data:/app/data \
-  ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+  ghcr.io/subekti404dev/stream-scraper-api:latest
 ```
 
 ## Manual Build & Push
@@ -50,7 +50,7 @@ GITHUB_USERNAME=your-username ./build-push-docker.sh
 The script will:
 - Create a multi-arch builder if needed
 - Build for `linux/amd64` and `linux/arm64/v8`
-- Push to `ghcr.io/YOUR_USERNAME/stream-scraper-api`
+- Push to `ghcr.io/subekti404dev/stream-scraper-api`
 - Tag as both `:latest` and `:VERSION`
 
 ### Manual Build Commands
@@ -66,7 +66,7 @@ docker buildx use multiarch-builder
 cd web
 docker buildx build \
   --platform linux/amd64,linux/arm64/v8 \
-  --tag ghcr.io/YOUR_USERNAME/stream-scraper-api:latest \
+  --tag ghcr.io/subekti404dev/stream-scraper-api:latest \
   --push \
   .
 ```
@@ -105,7 +105,7 @@ version: '3.8'
 
 services:
   scraper:
-    image: ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+    image: ghcr.io/subekti404dev/stream-scraper-api:latest
     container_name: stream-scraper
     ports:
       - "3000:3000"
@@ -143,7 +143,7 @@ Docker automatically pulls the correct architecture.
 Check supported platforms:
 
 ```bash
-docker buildx imagetools inspect ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
+docker buildx imagetools inspect ghcr.io/subekti404dev/stream-scraper-api:latest
 ```
 
 Output should show:
@@ -180,8 +180,8 @@ chmod +x build-push-docker.sh
 
 Your images will be at:
 ```
-ghcr.io/YOUR_USERNAME/stream-scraper-api:latest
-ghcr.io/YOUR_USERNAME/stream-scraper-api:v1.0.0
+ghcr.io/subekti404dev/stream-scraper-api:latest
+ghcr.io/subekti404dev/stream-scraper-api:v1.0.0
 ```
 
-Replace `YOUR_USERNAME` with your actual GitHub username (lowercase).
+Replace `subekti404dev` with your actual GitHub username (lowercase).

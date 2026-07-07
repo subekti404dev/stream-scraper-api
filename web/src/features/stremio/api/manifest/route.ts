@@ -9,7 +9,7 @@ const STREMIO_MANIFEST = {
   resources: ["stream"],
   types: ["movie", "series"],
   catalogs: [],
-  idPrefixes: ["tmdb:"],
+  idPrefixes: [],  // Use standard Stremio IMDB IDs (tt1234567)
 };
 
 export async function GET(req: Request) {

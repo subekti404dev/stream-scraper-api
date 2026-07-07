@@ -2,7 +2,6 @@ import { corsResponse } from "@/shared/lib/cors";
 import { NextResponse } from "next/server";
 import { runScrape } from "@/features/scraper/lib/engine";
 import { getServerSettings } from "@/features/settings/lib/server";
-import { resolveTmdbToImdb } from "@/features/scraper/lib/tmdb";
 import type { RouteContext } from "@/features/scraper/types";
 
 export async function GET(
@@ -22,25 +21,26 @@ export async function GET(
     // Load server settings for manifestUrl
     const settings = await getServerSettings();
 
-    // Parse Stremio ID format: "tmdb:123" or "tmdb:123:1:2" (series with season:episode)
-    const parts = id.replace("tmdb:", "").split(":");
-    const tmdbId = parts[0];
+    // Parse Stremio ID format:
+    // - Movie: "tt0137523" (IMDB ID)
+    // - Series: "tt0944947:1:1" (IMDB ID:season:episode)
+    const parts = id.split(":");
+    const imdb_id = parts[0];  // Already in IMDB format (tt1234567)
     const season = parts[1] ? parseInt(parts[1]) : undefined;
     const episode = parts[2] ? parseInt(parts[2]) : undefined;
 
-    // Convert TMDB ID to IMDB ID
-    const mediaType = type === "series" ? "tv" : "movie";
-    const imdb_id = await resolveTmdbToImdb(parseInt(tmdbId), mediaType);
-    
-    if (!imdb_id) {
+    // Validate IMDB ID format
+    if (!/^tt\d+$/.test(imdb_id)) {
       return corsResponse(
         request,
         NextResponse.json(
-          { streams: [], error: "Could not resolve TMDB ID to IMDB ID" },
-          { status: 404 }
+          { streams: [], error: "Invalid IMDB ID format. Expected tt1234567" },
+          { status: 400 }
         )
       );
     }
+
+    const mediaType = type === "series" ? "tv" : "movie";
 
     const streams = await runScrape({
       manifestUrl: settings.manifestUrl,

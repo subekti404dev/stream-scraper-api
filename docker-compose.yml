@@ -1,0 +1,18 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    environment:
+      # Used by /api/tmdb/resolve (see web/README.md)
+      TMDB_API_KEY: ${TMDB_API_KEY:-}
+      NODE_ENV: production
+      APP_SETTINGS_PATH: /app/data/settings.json
+    volumes:
+      - scraper_app_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  scraper_app_data:

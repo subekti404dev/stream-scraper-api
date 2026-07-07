@@ -1,0 +1,123 @@
+<h2>Brutalist Layout Concepts</h2>
+<p class="subtitle">Raw, geometric, high-contrast — pilih struktur yang cocok</p>
+
+<div class="cards">
+  <div class="card" data-choice="stark" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #000; color: #fff;">
+      <div style="border: 3px solid #fff; padding: 16px; margin-bottom: 16px;">
+        <div style="font-family: monospace; font-size: 14px; font-weight: 700; margin-bottom: 8px;">STREAM SCRAPER</div>
+        <div style="display: flex; gap: 16px; font-size: 11px;">
+          <div style="text-decoration: underline;">SCRAPE</div>
+          <div>PROVIDERS</div>
+          <div>SETTINGS</div>
+        </div>
+      </div>
+      <div style="border: 2px solid #fff; padding: 16px; background: #111;">
+        <div style="font-size: 12px; margin-bottom: 12px;">IMDB_ID</div>
+        <div style="border: 1px solid #fff; padding: 8px; font-family: monospace; font-size: 11px;">tt3521164</div>
+        <div style="margin-top: 16px; background: #fff; color: #000; padding: 12px; text-align: center; font-weight: 700; font-size: 11px;">
+          → SCRAPE
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Stark Grid</h3>
+      <p><strong>Style:</strong> Pure black/white, heavy borders, no curves</p>
+      <p><strong>Layout:</strong> Boxed sections, sharp edges, grid-based</p>
+      <p><strong>Type:</strong> ALL CAPS labels, monospace inputs</p>
+      <p class="label">VIBE: Terminal meets Swiss design</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="asymmetric" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #fff; color: #000;">
+      <div style="font-family: monospace; font-weight: 900; font-size: 24px; margin-bottom: 24px; letter-spacing: -1px;">
+        SCRAPER
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #000;">
+        <div style="background: #fff; padding: 16px; aspect-ratio: 1;">
+          <div style="font-size: 10px; font-weight: 700; margin-bottom: 8px;">ID</div>
+          <div style="font-family: monospace; font-size: 11px; border-bottom: 2px solid #000; padding-bottom: 4px;">tt3521164</div>
+        </div>
+        <div style="background: #000; color: #fff; padding: 16px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;">
+          RUN →
+        </div>
+        <div style="background: #f0f0f0; padding: 16px; grid-column: span 2;">
+          <div style="font-size: 9px; font-weight: 700; margin-bottom: 4px;">RESULTS (24)</div>
+          <div style="height: 40px; background: #000;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Asymmetric Blocks</h3>
+      <p><strong>Style:</strong> Black/white/gray only, no gradients</p>
+      <p><strong>Layout:</strong> Broken grid, different sized blocks, inverted sections</p>
+      <p><strong>Type:</strong> Mixed case, bold weights, condensed fonts</p>
+      <p class="label">VIBE: Bauhaus meets brutalism</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="neo" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: linear-gradient(135deg, #000 0%, #1a1a1a 100%); color: #0f0;">
+      <div style="border: 1px solid #0f0; padding: 2px; margin-bottom: 16px; display: inline-block;">
+        <div style="font-family: monospace; font-size: 12px; padding: 8px 12px; background: rgba(0,255,0,0.1);">
+          &gt; STREAM_SCRAPER_v1.0
+        </div>
+      </div>
+      <div style="margin-top: 16px; border-left: 3px solid #0f0; padding-left: 12px;">
+        <div style="font-family: monospace; font-size: 10px; margin-bottom: 8px; opacity: 0.7;">$ input.imdb_id</div>
+        <div style="font-family: monospace; font-size: 12px; color: #fff; margin-bottom: 16px;">tt3521164</div>
+        <div style="font-family: monospace; font-size: 10px; color: #0f0; cursor: pointer;">
+          [EXECUTE] →
+        </div>
+      </div>
+      <div style="margin-top: 16px; font-family: monospace; font-size: 9px; opacity: 0.5;">
+        ┌─ providers: 29 loaded<br>
+        └─ cache: enabled
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Neo-Terminal</h3>
+      <p><strong>Style:</strong> Dark + neon accent (green/cyan), glowing effects</p>
+      <p><strong>Layout:</strong> Terminal-inspired, ASCII art borders, monospace everything</p>
+      <p><strong>Type:</strong> Courier/monospace, command-line aesthetic</p>
+      <p class="label">VIBE: Hacker terminal, Matrix-inspired</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="raw" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #fafafa; color: #000;">
+      <div style="font-size: 10px; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px;">Stream Scraper</div>
+      <div style="border-bottom: 1px solid #000; padding-bottom: 16px; margin-bottom: 16px;">
+        <a href="#" style="font-size: 12px; text-decoration: underline; margin-right: 16px;">scrape</a>
+        <a href="#" style="font-size: 12px; margin-right: 16px;">providers</a>
+        <a href="#" style="font-size: 12px;">settings</a>
+      </div>
+      <form style="max-width: 400px;">
+        <label style="display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px;">IMDb ID</label>
+        <input type="text" value="tt3521164" style="width: 100%; padding: 8px; border: 1px solid #000; background: #fff; font-family: monospace; font-size: 12px; margin-bottom: 12px;">
+        <button style="padding: 10px 20px; background: #000; color: #fff; border: none; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer;">
+          Scrape
+        </button>
+      </form>
+    </div>
+    <div class="card-body">
+      <h3>Raw HTML</h3>
+      <p><strong>Style:</strong> Minimal CSS, browser defaults, hyperlinks</p>
+      <p><strong>Layout:</strong> Single column, linear flow, no fancy grids</p>
+      <p><strong>Type:</strong> System fonts, simple hierarchy, underlined links</p>
+      <p class="label">VIBE: Early web, anti-framework</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px; padding: 16px; background: var(--card-bg); border-radius: 8px;">
+  <p><strong>Brutalist principles untuk project ini:</strong></p>
+  <ul style="margin: 12px 0 0 20px; line-height: 1.8;">
+    <li>No rounded corners atau soft shadows</li>
+    <li>High contrast — hitam/putih dengan satu accent color maksimal</li>
+    <li>Typography as structure — size dan weight untuk hierarchy, bukan warna</li>
+    <li>Honest materials — borders dan boxes terlihat jelas, bukan sembunyi</li>
+    <li>Function over form — setiap element punya purpose yang clear</li>
+  </ul>
+</div>

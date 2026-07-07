@@ -1,0 +1,181 @@
+<h2>Typography & Components</h2>
+<p class="subtitle">Font choices, sizing hierarchy, dan interactive elements</p>
+
+<div class="options">
+  <div class="option" data-choice="inter" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Inter + IBM Plex Mono</h3>
+      <div style="margin: 16px 0; padding: 16px; background: #e8e8e8; border: 2px solid #000;">
+        <div style="font-family: 'Inter', -apple-system, sans-serif; font-weight: 900; font-size: 24px; margin-bottom: 12px; color: #000;">STREAM SCRAPER</div>
+        <div style="font-family: 'Inter', -apple-system, sans-serif; font-weight: 700; font-size: 11px; margin-bottom: 8px; color: #000;">IMDb ID</div>
+        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 10px; background: #fff; border: 2px solid #000; color: #000;">tt3521164</div>
+        <div style="font-family: 'Inter', -apple-system, sans-serif; font-size: 10px; margin-top: 8px; color: #333;">Results: 24 streams found</div>
+      </div>
+      <p><strong>Pros:</strong> Modern, web-safe fallbacks, excellent readability</p>
+      <p><strong>Cons:</strong> Common pairing, less distinctive</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="grotesk" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Space Grotesk + Courier</h3>
+      <div style="margin: 16px 0; padding: 16px; background: #e8e8e8; border: 2px solid #000;">
+        <div style="font-family: 'Space Grotesk', -apple-system, sans-serif; font-weight: 700; font-size: 24px; margin-bottom: 12px; letter-spacing: -0.5px; color: #000;">STREAM SCRAPER</div>
+        <div style="font-family: 'Space Grotesk', -apple-system, sans-serif; font-weight: 700; font-size: 11px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; color: #000;">IMDb ID</div>
+        <div style="font-family: 'Courier New', monospace; font-size: 13px; padding: 10px; background: #fff; border: 2px solid #000; font-weight: 600; color: #000;">tt3521164</div>
+        <div style="font-family: 'Space Grotesk', -apple-system, sans-serif; font-size: 10px; margin-top: 8px; color: #333;">Results: 24 streams found</div>
+      </div>
+      <p><strong>Pros:</strong> Geometric, tech feel, distinctive personality</p>
+      <p><strong>Cons:</strong> Need to load font, Courier less sharp than modern monospace</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="system" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>System Stack (No Web Fonts)</h3>
+      <div style="margin: 16px 0; padding: 16px; background: #e8e8e8; border: 2px solid #000;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 900; font-size: 24px; margin-bottom: 12px; color: #000;">STREAM SCRAPER</div>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 700; font-size: 11px; margin-bottom: 8px; color: #000;">IMDb ID</div>
+        <div style="font-family: ui-monospace, 'SF Mono', Menlo, Monaco, 'Cascadia Code', Consolas, monospace; font-size: 13px; padding: 10px; background: #fff; border: 2px solid #000; color: #000;">tt3521164</div>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 10px; margin-top: 8px; color: #333;">Results: 24 streams found</div>
+      </div>
+      <p><strong>Pros:</strong> Zero load time, native feel, brutalist honesty</p>
+      <p><strong>Cons:</strong> Less control over appearance, varies by OS</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <h3>Type Scale & Hierarchy</h3>
+  <div style="background: #e8e8e8; border: 2px solid #000; padding: 20px; margin-top: 16px;">
+    <div style="font-weight: 900; font-size: 24px; margin-bottom: 4px; color: #000;">Display / Brand (24px, 900 weight)</div>
+    <div style="font-size: 10px; color: #333; margin-bottom: 20px;">Page title, logo, primary brand element</div>
+    
+    <div style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #000;">Heading (16px, 700 weight)</div>
+    <div style="font-size: 10px; color: #333; margin-bottom: 20px;">Section titles, card headers</div>
+    
+    <div style="font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; color: #000;">Label (11px, 700 weight, uppercase)</div>
+    <div style="font-size: 10px; color: #333; margin-bottom: 20px;">Form labels, table headers, metadata</div>
+    
+    <div style="font-size: 12px; margin-bottom: 4px; color: #000;">Body (12px, 400 weight)</div>
+    <div style="font-size: 10px; color: #333; margin-bottom: 20px;">Main content, descriptions, help text</div>
+    
+    <div style="font-family: monospace; font-size: 13px; margin-bottom: 4px; color: #000;">Mono (13px, monospace)</div>
+    <div style="font-size: 10px; color: #333;">IDs, URLs, code snippets, technical data</div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <h3>Interactive Components</h3>
+  
+  <div style="display: grid; gap: 20px; margin-top: 16px;">
+    <div>
+      <div class="label" style="color: #000;">BUTTONS</div>
+      <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+        <button style="background: #000; color: #fff; border: none; padding: 12px 24px; font-weight: 700; font-size: 11px; text-transform: uppercase; cursor: pointer;">
+          Primary Action
+        </button>
+        <button style="background: #fff; color: #000; border: 2px solid #000; padding: 12px 24px; font-weight: 700; font-size: 11px; text-transform: uppercase; cursor: pointer;">
+          Secondary
+        </button>
+        <button style="background: #e8e8e8; color: #666; border: 2px solid #ccc; padding: 12px 24px; font-weight: 700; font-size: 11px; text-transform: uppercase; cursor: not-allowed;">
+          Disabled
+        </button>
+      </div>
+    </div>
+    
+    <div>
+      <div class="label" style="color: #000;">INPUTS</div>
+      <div style="display: grid; gap: 8px; margin-top: 8px; max-width: 400px;">
+        <input type="text" placeholder="Default input" style="padding: 10px; border: 2px solid #000; background: #fff; font-size: 12px; width: 100%; color: #000;">
+        <input type="text" value="tt3521164" style="padding: 10px; border: 2px solid #000; background: #fff; font-family: monospace; font-size: 13px; width: 100%; color: #000;">
+        <input type="text" placeholder="Focused" style="padding: 10px; border: 3px solid #000; background: #fff; font-size: 12px; width: 100%; outline: none; color: #000;">
+      </div>
+    </div>
+    
+    <div>
+      <div class="label" style="color: #000;">TOGGLES / TABS</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #000; margin-top: 8px; max-width: 300px;">
+        <div style="background: #000; color: #fff; padding: 10px; text-align: center; font-size: 11px; font-weight: 700; cursor: pointer;">
+          MOVIE
+        </div>
+        <div style="background: #e8e8e8; color: #000; padding: 10px; text-align: center; font-size: 11px; font-weight: 700; cursor: pointer;">
+          TV
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <div class="label" style="color: #000;">LINKS</div>
+      <div style="margin-top: 8px; font-size: 12px;">
+        <a href="#" style="color: #000; text-decoration: underline; font-weight: 700;">Standard link</a> • 
+        <a href="#" style="color: #000; text-decoration: none; font-weight: 700;">No underline</a> • 
+        <span style="color: #333; font-size: 11px;">Muted text</span>
+      </div>
+    </div>
+    
+    <div>
+      <div class="label" style="color: #000;">CARDS / RESULTS</div>
+      <div style="background: #fff; border: 2px solid #000; padding: 16px; margin-top: 8px; max-width: 500px;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #e8e8e8;">
+          <div style="font-weight: 700; font-size: 12px; color: #000;">Moana - Premium Quality</div>
+          <div style="font-size: 11px; color: #333;">1080p</div>
+          <a href="#" style="font-size: 11px; text-decoration: underline; color: #000; font-weight: 700;">LINK</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 12px; align-items: center; padding-top: 12px;">
+          <div style="font-weight: 700; font-size: 12px; color: #000;">Moana - Standard Quality</div>
+          <div style="font-size: 11px; color: #333;">720p</div>
+          <a href="#" style="font-size: 11px; text-decoration: underline; color: #000; font-weight: 700;">LINK</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 32px;">
+  <h3>Color Usage</h3>
+  <div style="display: grid; gap: 12px; margin-top: 16px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 60px; height: 60px; background: #000; border: 2px solid #ccc;"></div>
+      <div>
+        <div style="font-weight: 700; color: #000;">#000 (Black)</div>
+        <div style="font-size: 11px; color: #333;">Text, borders, inverted sections, primary actions</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 60px; height: 60px; background: #fff; border: 2px solid #ccc;"></div>
+      <div>
+        <div style="font-weight: 700; color: #000;">#fff (White)</div>
+        <div style="font-size: 11px; color: #333;">Cards, input backgrounds, inverted text</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 60px; height: 60px; background: #e8e8e8; border: 2px solid #ccc;"></div>
+      <div>
+        <div style="font-weight: 700; color: #000;">#e8e8e8 (Light Gray)</div>
+        <div style="font-size: 11px; color: #333;">Page background, inactive states, secondary sections</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 60px; height: 60px; background: #333; border: 2px solid #ccc;"></div>
+      <div>
+        <div style="font-weight: 700; color: #000;">#333 (Dark Gray)</div>
+        <div style="font-size: 11px; color: #333;">Secondary text, metadata, muted content</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px; padding: 16px; background: var(--card-bg); border-radius: 8px;">
+  <p><strong>Design Tokens:</strong></p>
+  <ul style="margin: 8px 0 0 20px; line-height: 1.8;">
+    <li><strong>Border width:</strong> 2px untuk semua borders (3px untuk focus states)</li>
+    <li><strong>Spacing:</strong> Multiples of 4px (4, 8, 12, 16, 24, 32)</li>
+    <li><strong>Border radius:</strong> 0px (no rounded corners)</li>
+    <li><strong>Transitions:</strong> None atau instant (anti-smooth)</li>
+    <li><strong>Shadows:</strong> None (flat design)</li>
+  </ul>
+</div>

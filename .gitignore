@@ -1,0 +1,17 @@
+docker-compose.bun.yml
+bun.lock
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# Provider cache with hardcoded keys
+nuvio-providers-cache/
+
+# Next.js build output
+web/.next/
+web/out/
+web/build/

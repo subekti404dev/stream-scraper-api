@@ -3,7 +3,7 @@ type CacheEntry<T> = { value: T; expiresAt: number };
 const CACHE = globalThis as unknown as {
   __scraperCache?: {
     manifest?: Map<string, CacheEntry<unknown>>;
-    tmdb?: Map<string, CacheEntry<number | null>>;
+    tmdb?: Map<string, CacheEntry<number | string | null>>;
     providerCode?: Map<string, CacheEntry<string>>;
   };
 };

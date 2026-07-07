@@ -38,7 +38,7 @@ export async function resolveTmdbToImdb(
   const tmdbCache = getTmdbCache();
   const key = `tmdb-rev:${type}:${tmdb_id}`;
   const cached = cacheGet(tmdbCache, key);
-  if (cached !== null) return cached as string;
+  if (cached !== null) return cached;
 
   const apiKey = process.env.TMDB_API_KEY;
   if (!apiKey) {

@@ -21,11 +21,12 @@ export async function GET(
     // Load server settings for manifestUrl
     const settings = await getServerSettings();
 
-    // Parse Stremio ID format:
-    // - Movie: "tt0137523" (IMDB ID)
-    // - Series: "tt0944947:1:1" (IMDB ID:season:episode)
-    const parts = id.split(":");
-    const imdb_id = parts[0];  // Already in IMDB format (tt1234567)
+    // Parse Stremio ID format (strip .json extension):
+    // - Movie: "tt0137523.json" -> "tt0137523"
+    // - Series: "tt0944947:1:1.json" -> "tt0944947:1:1"
+    const cleanId = id.replace(/\.json$/, "");
+    const parts = cleanId.split(":");
+    const imdb_id = parts[0];  // IMDB format (tt1234567)
     const season = parts[1] ? parseInt(parts[1]) : undefined;
     const episode = parts[2] ? parseInt(parts[2]) : undefined;
 

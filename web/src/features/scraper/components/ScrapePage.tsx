@@ -128,7 +128,7 @@ export default function ScrapePage() {
 
   return (
     <AppShell title="SCRAPE">
-      <div style={{ display: "grid", gap: "2px", maxWidth: "900px" }}>
+      <div style={{ display: "grid", gap: "2px" }}>
         {/* Input Form + Action Button */}
         <div className="grid-asymmetric-2-1">
           {/* Left: Input Section */}

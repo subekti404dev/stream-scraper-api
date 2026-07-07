@@ -76,7 +76,7 @@ export default function ProvidersPage() {
 
   return (
     <AppShell title="PROVIDERS">
-      <div style={{ maxWidth: "900px" }}>
+      <div>
         {error && (
           <div className="card" style={{ background: "#ffebee", borderColor: "#c62828", marginBottom: "var(--space-4)" }}>
             <div className="text-label" style={{ color: "#c62828", marginBottom: "var(--space-1)" }}>ERROR</div>

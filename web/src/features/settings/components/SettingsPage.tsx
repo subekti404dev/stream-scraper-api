@@ -113,7 +113,7 @@ export default function SettingsPage() {
 
   return (
     <AppShell title="SETTINGS">
-      <div style={{ maxWidth: "900px" }}>
+      <div>
         <div className="card" style={{ marginBottom: "var(--space-4)" }}>
           <div className="text-heading" style={{ marginBottom: "var(--space-4)" }}>MANIFEST</div>
 

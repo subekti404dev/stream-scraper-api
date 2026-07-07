@@ -31,7 +31,7 @@ RUN addgroup -g 1001 -S nodejs \
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/next.config.ts ./next.config.ts
-COPY --from=build /app/public ./public
+RUN mkdir -p ./public
 COPY --from=build /app/.next ./.next
 
 USER nextjs

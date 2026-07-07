@@ -42,8 +42,7 @@ export async function GET(
     }
 
     const mediaType = type === "series" ? "tv" : "movie";
-
-    const streams = await runScrape({
+    const scrapeResult = await runScrape({
       manifestUrl: settings.manifestUrl,
       imdb_id,
       type: mediaType as "movie" | "tv",
@@ -52,7 +51,15 @@ export async function GET(
       ...(episode && { episode }),
     });
 
-    return corsResponse(request, NextResponse.json({ streams: streams.streams }));
+    // Map scraper results to Stremio stream format
+    const streams = scrapeResult.results.map((result) => ({
+      name: result.providerName,
+      title: result.quality || "Unknown",
+      url: result.url,
+      ...(result.headers && { behaviorHints: { notWebReady: true } }),
+    }));
+
+    return corsResponse(request, NextResponse.json({ streams }));
   } catch (error) {
     console.error("[Stremio Stream] Error:", error);
     return corsResponse(

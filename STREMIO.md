@@ -31,32 +31,21 @@ GET /api/stremio/stream/{type}/{id}.json
 
 **Parameters:**
 - `type`: `movie` or `series`
-- `id`: TMDB ID format:
-  - Movie: `tmdb:550` (Fight Club)
-  - Series: `tmdb:1399:1:1` (Game of Thrones S01E01)
-    - Format: `tmdb:{tmdb_id}:{season}:{episode}`
+- `id`: **IMDB ID format** (standard Stremio):
+  - Movie: `tt0137523` (Fight Club)
+  - Series: `tt0944947:1:1` (Game of Thrones S01E01)
+    - Format: `{imdb_id}:{season}:{episode}`
 
-**Response:**
-
-```json
-{
-  "streams": [
-    {
-      "name": "Provider Name",
-      "title": "1080p",
-      "url": "https://example.com/stream.mp4"
-    }
-  ]
-}
-```
+**Note:** Uses standard Stremio IMDB IDs, not TMDB IDs.
 
 ## How It Works
 
-1. **Stremio sends TMDB ID** → `/api/stremio/stream/movie/tmdb:550.json`
-2. **Resolve TMDB → IMDB** → Uses TMDB API `/external_ids` endpoint
-3. **Load settings** → Gets `manifestUrl` from server settings
-4. **Run scrape** → Uses existing scraper engine with providers
-5. **Return streams** → Format compatible with Stremio
+1. **Stremio sends IMDB ID** → `/api/stremio/stream/movie/tt0137523.json`
+2. **Load settings** → Gets `manifestUrl` from server settings
+3. **Run scrape** → Uses existing scraper engine with IMDB ID
+4. **Return streams** → Format compatible with Stremio
+
+**Note:** IMDB → TMDB resolution happens inside the scraper engine when needed by providers.
 
 ## Installation in Stremio
 
@@ -70,7 +59,6 @@ GET /api/stremio/stream/{type}/{id}.json
    https://your-domain.com/api/stremio/manifest.json
    ```
 5. Click **Install**
-
 ### Option 2: Self-Hosted
 
 If running locally:
@@ -92,15 +80,15 @@ curl http://localhost:3000/api/stremio/manifest.json
 ### Test Movie Stream
 
 ```bash
-# Fight Club (TMDB ID: 550)
-curl http://localhost:3000/api/stremio/stream/movie/tmdb:550.json
+# Fight Club (IMDB: tt0137523)
+curl http://localhost:3000/api/stremio/stream/movie/tt0137523.json
 ```
 
 ### Test Series Stream
 
 ```bash
-# Game of Thrones S01E01 (TMDB ID: 1399)
-curl http://localhost:3000/api/stremio/stream/series/tmdb:1399:1:1.json
+# Game of Thrones S01E01 (IMDB: tt0944947)
+curl http://localhost:3000/api/stremio/stream/series/tt0944947:1:1.json
 ```
 
 ## Requirements
@@ -135,10 +123,10 @@ Look for:
 
 ### Common Issues
 
-**"Could not resolve TMDB ID to IMDB ID"**
-- TMDB ID might be invalid
-- Check TMDB API key is set
-- Verify TMDB ID exists: https://www.themoviedb.org/movie/{id}
+**"Invalid IMDB ID format"**
+- IMDB ID must start with `tt` followed by numbers
+- Example: `tt0137523` not `0137523` or `imdb:tt0137523`
+- For series, use format: `tt0944947:1:1` (season:episode)
 
 **"Missing manifestUrl"**
 - Go to `/settings` and configure manifest URL
@@ -156,21 +144,19 @@ Look for:
 ## Architecture
 
 ```
-Stremio Request
+Stremio Request (IMDB ID)
   ↓
 Manifest Endpoint (/api/stremio/manifest.json)
   ↓
 Stream Endpoint (/api/stremio/stream/{type}/{id}.json)
   ↓
-Resolve TMDB → IMDB (TMDB API)
-  ↓
 Load Server Settings (manifestUrl)
   ↓
-Run Scraper Engine
+Run Scraper Engine (with IMDB ID)
   ↓
 Fetch Providers (from manifest)
   ↓
-Run Workers (parallel scraping)
+Run Workers (parallel scraping, IMDB→TMDB if needed)
   ↓
 Normalize & Dedupe Streams
   ↓
@@ -179,9 +165,8 @@ Return to Stremio
 
 ## Performance
 
-- **TMDB Resolution:** ~100-300ms (cached after first request)
 - **Scraping:** ~5-30s depending on provider count and timeout
-- **Caching:** TMDB lookups cached for 6 hours
+- **Caching:** Provider results cached per request
 - **Concurrency:** Up to 30 providers run in parallel
 
 ## Security
@@ -235,12 +220,12 @@ https://scraper.yourdomain.com/api/stremio/manifest.json
 
 - No catalog support (search/browse) — only resolves direct requests
 - Depends on upstream provider availability
-- TMDB ID resolution required (no direct IMDB ID support yet)
 - No subtitle support (providers focus on video streams)
+- Some providers may need TMDB ID (automatic conversion inside scraper)
 
 ## Roadmap
 
-- [ ] Direct IMDB ID support (skip TMDB resolution)
+- [x] Direct IMDB ID support (standard Stremio format)
 - [ ] Catalog implementation (trending, popular)
 - [ ] Stream quality filtering
 - [ ] Subtitle support

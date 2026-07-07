@@ -7,7 +7,7 @@ export async function resolveImdbToTmdb(
   const tmdbCache = getTmdbCache();
   const key = `${type}:${imdb_id}`;
   const cached = cacheGet(tmdbCache, key);
-  if (cached !== null) return cached;
+  if (cached !== null) return cached as number;
 
   const apiKey = process.env.TMDB_API_KEY;
   if (!apiKey) {
@@ -38,7 +38,7 @@ export async function resolveTmdbToImdb(
   const tmdbCache = getTmdbCache();
   const key = `tmdb-rev:${type}:${tmdb_id}`;
   const cached = cacheGet(tmdbCache, key);
-  if (cached !== null) return cached;
+  if (cached !== null) return cached as string;
 
   const apiKey = process.env.TMDB_API_KEY;
   if (!apiKey) {

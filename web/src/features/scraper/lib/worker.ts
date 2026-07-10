@@ -1,4 +1,10 @@
 import { Worker } from "node:worker_threads";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const WEB_DIR = path.resolve(__dirname, "../../../../../");
 
 export type ProviderWorkerOk = {
   ok: true;
@@ -23,8 +29,10 @@ export type ProviderWorkerMsg = ProviderWorkerOk | ProviderWorkerErr;
 export const PROVIDER_WORKER_CODE = String.raw`
 const { parentPort, workerData } = require("node:worker_threads");
 const vm = require("node:vm");
+const path = require("node:path");
 const { createRequire } = require("node:module");
-const nodeRequire = createRequire(process.cwd() + "/package.json");
+const baseDir = workerData.baseDir || process.cwd();
+const nodeRequire = createRequire(path.resolve(baseDir, "package.json"));
 
 function post(msg) {
   try { parentPort && parentPort.postMessage(msg); } catch {}
@@ -175,7 +183,7 @@ export function runProviderInWorker(args: {
   });
   const worker = new Worker(PROVIDER_WORKER_CODE, {
     eval: true,
-    workerData: args,
+    workerData: { ...args, baseDir: WEB_DIR },
   });
 
   const hard = setTimeout(() => {

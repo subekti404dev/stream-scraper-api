@@ -45,6 +45,9 @@ RUN addgroup -g 1001 -S nodejs \
 COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy production node_modules for external packages (cheerio, crypto-js, ws)
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+
 # Create empty public folder
 RUN mkdir -p ./public && chown nextjs:nodejs ./public
 

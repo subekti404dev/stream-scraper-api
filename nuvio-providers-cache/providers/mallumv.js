@@ -45,7 +45,7 @@ function base64Decode(str) {
 
 function base64Encode(str) {
     try {
-        return btoa(unescape(encodeURIComponent(str)));
+        return Buffer.from(str, 'utf-8').toString('base64');
     } catch (e) {
         return '';
     }

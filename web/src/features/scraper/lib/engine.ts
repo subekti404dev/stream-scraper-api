@@ -25,9 +25,19 @@ export async function runScrape(
     throw new Error("Missing manifestUrl");
   }
 
-  const manifest = await fetchManifest(payload.manifestUrl);
-  const allow = new Set((payload.providerKeys || []).map(String));
+  const providerTimeoutMs = Math.max(
+    2_000,
+    Math.min(payload.providerTimeoutMs || 15_000, 120_000),
+  );
 
+  // Start manifest fetch and TMDB resolution in parallel
+  const manifestPromise = fetchManifest(payload.manifestUrl);
+  const tmdbPromise = resolveImdbToTmdb(payload.imdb_id, payload.type);
+
+  // Wait for manifest, then immediately start fetching provider codes
+  const manifest = await manifestPromise;
+
+  const allow = new Set((payload.providerKeys || []).map(String));
   const providers: Array<{ p: ManifestScraper; providerKey: string }> = [];
   for (let idx = 0; idx < manifest.scrapers.length; idx++) {
     const p = manifest.scrapers[idx] as ManifestScraper;
@@ -41,12 +51,30 @@ export async function runScrape(
     providers.push({ p, providerKey });
   }
 
-  const tmdb_id = await resolveImdbToTmdb(payload.imdb_id, payload.type);
-
-  const providerTimeoutMs = Math.max(
-    2_000,
-    Math.min(payload.providerTimeoutMs || 15_000, 120_000),
+  // Fetch provider codes immediately (runs in parallel with TMDB resolution)
+  const providerCodesPromise = Promise.all(
+    providers.map(async ({ p, providerKey }) => {
+      const providerUrl = buildProviderFileUrl(payload.manifestUrl, p.filename);
+      try {
+        const code = await getProviderCode(providerUrl, providerTimeoutMs);
+        return { providerKey, code };
+      } catch {
+        return { providerKey, code: null };
+      }
+    })
   );
+
+  // Wait for both TMDB and provider codes
+  const [tmdb_id, providerCodesResults] = await Promise.all([
+    tmdbPromise,
+    providerCodesPromise,
+  ]);
+
+  const providerCodesMap = new Map<string, string>();
+  for (const { providerKey, code } of providerCodesResults) {
+    if (code) providerCodesMap.set(providerKey, code);
+  }
+
   const maxConcurrency = Math.min(30, Math.max(1, providers.length));
 
   const streams: Array<{
@@ -69,23 +97,6 @@ export async function runScrape(
     error?: string;
     resultCount?: number;
   }> = [];
-
-  // Fetch all provider codes in parallel first
-  const providerCodesMap = new Map<string, string>();
-  await Promise.all(
-    providers.map(async ({ p, providerKey }) => {
-      const providerUrl = buildProviderFileUrl(
-        payload.manifestUrl,
-        p.filename,
-      );
-      try {
-        const code = await getProviderCode(providerUrl, providerTimeoutMs);
-        providerCodesMap.set(providerKey, code);
-      } catch (e) {
-        // Code fetch failed, will be handled in worker execution
-      }
-    })
-  );
 
   const msgs = await runPool(
     providers,

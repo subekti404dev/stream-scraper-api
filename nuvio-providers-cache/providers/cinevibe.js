@@ -49,13 +49,11 @@ function rot13(str) {
 }
 
 /**
- * Base64 encoding helper (using btoa for browser/React Native)
+ * Base64 encoding helper (Node.js compatible)
  */
 function base64Encode(str) {
     try {
-        // For React Native, we need to handle Unicode properly
-        const utf8Bytes = unescape(encodeURIComponent(str));
-        return btoa(utf8Bytes);
+        return Buffer.from(str, 'utf-8').toString('base64');
     } catch (error) {
         console.error('[Cinevibe] Base64 encode error:', error);
         throw error;
@@ -63,12 +61,11 @@ function base64Encode(str) {
 }
 
 /**
- * Base64 decoding helper (using atob for browser/React Native)
+ * Base64 decoding helper (Node.js compatible)
  */
 function base64Decode(str) {
     try {
-        const decoded = atob(str);
-        return decodeURIComponent(escape(decoded));
+        return Buffer.from(str, 'base64').toString('utf-8');
     } catch (error) {
         console.error('[Cinevibe] Base64 decode error:', error);
         throw error;

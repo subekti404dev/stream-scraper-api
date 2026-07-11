@@ -1,0 +1,19 @@
+services:
+  scraper:
+    image: ghcr.io/subekti404dev/stream-scraper-api:latest
+    container_name: stream-scraper
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    volumes:
+      - scraper_app_data:/app/data
+    environment:
+      - APP_SETTINGS_PATH=/app/data/settings.json
+      - TMDB_API_KEY=439c478a771f35c05022f9feabcca01c
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+
+volumes:
+  scraper_app_data:
+    external: true
+    name: stream-scraper-api_scraper_app_data

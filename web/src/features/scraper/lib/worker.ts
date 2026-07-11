@@ -68,6 +68,7 @@ async function run() {
       URLSearchParams,
       AbortController,
       AbortSignal,
+      Buffer,
       global: {},
       module: moduleShim,
       exports: exportsShim,

@@ -2,6 +2,7 @@ services:
   scraper:
     image: ghcr.io/subekti404dev/stream-scraper-api:latest
     container_name: stream-scraper
+    hostname: stream-scraper
     restart: unless-stopped
     ports:
       - "3002:3000"
@@ -12,6 +13,7 @@ services:
       - TMDB_API_KEY=439c478a771f35c05022f9feabcca01c
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
+      - HOSTNAME=0.0.0.0
 
 volumes:
   scraper_app_data:
